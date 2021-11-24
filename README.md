@@ -2,6 +2,7 @@
 
 These scripts were forked from [Moriakace](https://github.com/moriakaice/bitburner).  I am using them as a base for learning.  They are probably not optimized, but I'm having fun learning.
 
+## Original Readme
 Welcome to my log of [Bitburner](https://danielyxie.github.io/bitburner/) scripts. They are written using the in-game language of NetscriptJS, which is a mutation of Javascript.
 
 If you want to play the game itself - click on the name above.
