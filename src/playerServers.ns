@@ -1,4 +1,4 @@
-import { createUUID } from 'helpers.js'
+import { createUUID } from 'helpers.ns'
 
 const settings = {
   maxPlayerServers: 25,

@@ -1,4 +1,4 @@
-import { createUUID, localeHHMMSS } from 'helpers.js'
+import { createUUID, localeHHMMSS } from 'helpers.ns'
 
 const settings = {
   homeRamReserved: 20,
