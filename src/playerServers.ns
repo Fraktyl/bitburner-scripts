@@ -1,4 +1,5 @@
-import { createUUID } from 'helpers.ns'
+import { createUUID, localeHHMMSS } from 'helpers.ns'
+import { getItem, setItem } 'common.ns'
 
 const settings = {
   maxPlayerServers: 25,
@@ -13,24 +14,6 @@ const settings = {
   keys: {
     serverMap: 'BB_SERVER_MAP',
   },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
 }
 
 function updateServer(ns, serverMap, host) {
