@@ -1,5 +1,5 @@
 import { settings, setItem } from 'common.ns'
-import {localeHHMMSS} from helpers.ns
+import { localeHHMMSS } from 'helpers.ns'
 
 const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
 
