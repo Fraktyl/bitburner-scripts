@@ -1,17 +1,18 @@
 const baseUrl = 'https://raw.githubusercontent.com/fraktyl/bitburner-scripts/main/src/'
 const filesToDownload = [
   'common.ns',
-  'mainHack.ns',
-  'spider.ns',
+  'contracter.ns',
+  'find.ns',
   'grow.ns',
   'hack.ns',
-  'weaken.ns',
-  'playerServers.ns',
-  'killAll.ns',
-  'runHacking.ns',
-  'find.ns',
-  'contracter.ns',
   'helpers.ns',
+  'karmaReducer.ns',
+  'killAll.ns',  
+  'mainHack.ns',
+  'spider.ns',
+  'playerServers.ns',
+  'runHacking.ns',
+  'weaken.ns',
 ]
 const valuesToRemove = ['BB_SERVER_MAP']
 

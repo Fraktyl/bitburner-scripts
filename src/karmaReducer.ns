@@ -1,27 +1,4 @@
-const settings = {
-  keys: {
-    crimesStop: 'BB_CRIMES_STOP',
-  },
-  intervalToRecheck: 10 * 60 * 1000,
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
+import { localeHHMMSS } from 'helpers.ns'
 
 export async function main(ns) {
   ns.tprint(`[${localeHHMMSS()}] Starting karmaReducer.ns`)
@@ -32,24 +9,19 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  let continueCommitingCrime = true
   const crimeToCommit = 'homicide'
+  let numKills = 29
 
-  while (continueCommitingCrime) {
-    const crimesStop = getItem(settings.keys.crimesStop)
-
-    if (crimesStop) {
-      continueCommitingCrime = false
-    } else {
-      while (ns.isBusy()) {
-        await ns.sleep(100)
+  while (numkills > 0) {
+    if ns.getCrimeChange(crimeToCommit) = 1 {
+      ns.commitCrime(crimeToCommit)
+      numkills--
       }
 
-      ns.tprint(`[${localeHHMMSS()}] Commiting crime: ${crimeToCommit}`)
-      ns.commitCrime(crimeToCommit)
-      await ns.sleep(1000)
+    while (nsIsBusy()) {
+      await ns.sleep(100)
     }
   }
 
-  setItem(settings.keys.crimesStop, false)
+  ns.tprint(`[${localeHHMMSS()}] Karma Reduced`)
 }

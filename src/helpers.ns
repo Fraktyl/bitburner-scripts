@@ -16,3 +16,7 @@ export function localeHHMMSS(ms = 0) {
 
   return new Date(ms).toLocaleTimeString()
 }
+
+function getCurrentMoney(ns) {
+    return ns.getServerMoneyAvailable("home");
+}
