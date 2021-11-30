@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { getCurrentMoney, localeHHMMSS, createUUID } from 'helpers.ns'
+=======
+import { getCurrentMoney, localeHHMMSS } from 'helpers.ns'
+>>>>>>> 28f5896c51008c03bd9fddf373049ab82abb3572
 import { getItem, setItem } from 'common.ns'
 
 const settings = {
