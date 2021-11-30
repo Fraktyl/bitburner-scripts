@@ -1,4 +1,4 @@
-import { getCurrentMoney } from 'helpers.ns'
+import { getCurrentMoney, localeHHMMSS } from 'helpers.ns'
 import { getItem, setItem } from 'common.ns'
 
 const settings = {
@@ -42,7 +42,7 @@ function buyBestServerPossible(ns) {
 
   if (existingServers.length < settings.maxPlayerServers) {
     if (getCurrentMoney(ns) >= maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation) {
-      var server = ns.purchaseServer("pServ-" + existingServers.length + "-" + maxRamCanBuy, maxRamCanBuy)
+      var server = ns.purchaseServer("pServ-" + existingServers.length-1 + "-" + maxRamCanBuy, maxRamCanBuy)
       if (server) {
         updateServerMap(ns, serverMap, server)
         return 1;
@@ -66,7 +66,7 @@ function buyBestServerPossible(ns) {
     }
 
     if (getCurrentMoney(ns) >= maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation) {
-      var server = ns.purchaseServer("pServ-" + existingServers.length + "-" + maxRamCanBuy, maxRamCanBuy)
+      var server = ns.purchaseServer("pServ-" + existingServers.length-1 + "-" + maxRamCanBuy, maxRamCanBuy)
       if (server) {
         updateServerMap(ns, serverMap, server)
         return 1
@@ -79,6 +79,7 @@ function buyBestServerPossible(ns) {
 }
 
 function sellPurchasedServer(ns, serverName) {
+  ns.tprint(`[${localeHHMMSS}] Selling: ${serverName}`)
   ns.killall(serverName);
   ns.deleteServer(serverName);
 }
