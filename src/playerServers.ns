@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { getCurrentMoney, localeHHMMSS, createUUID } from 'helpers.ns'
-=======
-import { getCurrentMoney, localeHHMMSS } from 'helpers.ns'
->>>>>>> 28f5896c51008c03bd9fddf373049ab82abb3572
 import { getItem, setItem } from 'common.ns'
 
 const settings = {
@@ -19,12 +15,15 @@ const settings = {
 }
 
 export async function main(ns) {
+  ns.disableLog('getServerMaxRam')
+  ns.disableLog('getServerMoneyAvailable')
+  
   while (settings.buyServers) {
     buyBestServerPossible(ns)
     if (allServersMaxed(ns)) {
       settings.buyServers = false
     }
-    await ns.sleep(1000)
+    await ns.sleep(30000)
   }
 }
 
@@ -50,20 +49,20 @@ function buyBestServerPossible(ns) {
       var server = ns.purchaseServer(hostname, maxRamCanBuy)
       if (server) {
         updateServerMap(ns, serverMap, server)
+        ns.tprint(`[${localeHHMMSS()}] Buying: ${hostname}`)
       }
+    } else {
+      ns.print(`[${localeHHMMSS()}] Cannot afford.  Need: ${maxRamCanBuy * setItem.gbRamCost * settings.totalMoneyAllocation} - Have: ${getCurrentMoney(ns)}`)
     }
   } else {
-    var worstServer = null
-    var worstRam = settings.maxGbRam
+    var worstServer = findWorstServer(ns, existingServers)
+    var worstServerRam = ns.getServerMaxRam(worstServer)
 
-    for (var i = 0; i < existingServers.length; i++) {
-      var maxRam = ns.getServerMaxRam(existingServers[i])
-      if (maxRam < worstRam) {
-        worstServer = existingServers[i]
-      }
+    if (maxRamCanBuy <= worstServerRam) {
+      return
     }
-
-    if (worstServer !== null && settings.maxGbRam > ns.getServerMaxRam(worstServer)) {
+    
+    if (worstServer !== null && settings.maxGbRam > worstServerRam) {
       sellPurchasedServer(ns, worstServer)
     }
 
@@ -72,14 +71,30 @@ function buyBestServerPossible(ns) {
       var server = ns.purchaseServer(hostname, maxRamCanBuy)
       if (server) {
         updateServerMap(ns, serverMap, server)
+        ns.tprint(`[${localeHHMMSS()}] Buying: ${hostname}`)
       }
+    }  else {
+      ns.print(`[${localeHHMMSS()}] Cannot afford.  Need: ${maxRamCanBuy * setItem.gbRamCost * settings.totalMoneyAllocation} - Have: ${getCurrentMoney(ns)}`)
     }
-
   }
 }
 
+function findWorstServer(ns, existingServers) {
+  var worstServer = null
+  var worstRam = settings.maxGbRam
+
+  for (var i = 0; i < existingServers.length; i++) {
+    var maxRam = ns.getServerMaxRam(existingServers[i])
+    if (maxRam < worstRam) {
+      worstServer = existingServers[i]
+      worstRam = maxRam
+    }
+  }
+  return worstServer
+}
+
 function sellPurchasedServer(ns, serverName) {
-  ns.tprint(`[${localeHHMMSS}] Selling: ${serverName}`)
+  ns.print(`[${localeHHMMSS()}] Selling: ${serverName}`)
   ns.killall(serverName);
   ns.deleteServer(serverName);
 }
