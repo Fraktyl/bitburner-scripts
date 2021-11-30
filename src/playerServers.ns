@@ -1,5 +1,5 @@
-import { localeHHMMSS, getCurrentMoney } from 'helpers.ns'
-import { getItem, setItem } 'common.ns'
+import { getCurrentMoney } from 'helpers.ns'
+import { getItem, setItem } from 'common.ns'
 
 const settings = {
   maxPlayerServers: 25,
@@ -25,35 +25,36 @@ export async function main(ns) {
 }
 
 function buyBestServerPossible(ns) {
-  var currentMoney = getCurrentMoney(ns)
-  var currentRamExponent = 2
+  const serverMap = getItem(settings.keys.serverMap)
+  var availableMoney = getCurrentMoney(ns) * settings.totalMoneyAllocation
+  var currentRamExponent = 1
   var existingServers = ns.getPurchasedServers()
-  
-  while(Math.pow(2, currentRamExponent + 1) * settings.gbRamCost <= currentMoney * settings.totalMoneyAllocation && currentRamExponent < settings.maxExponent) {
+
+  while (ns.getPurchasedServerCost(Math.pow(2, currentRamExponent + 1)) <= availableMoney && currentRamExponent < settings.maxExponent) {
     currentRamExponent++
   }
 
   var maxRamCanBuy = Math.pow(2, currentRamExponent)
 
-  if (maxRamCanBuy < settings.minPurchasedServerRam && maxRamCanBuy < Math.pow(2,settings.maxExponent)) {
-    return 0
+  if (maxRamCanBuy < settings.minPurchasedServerRam && maxRamCanBuy < Math.pow(2, settings.maxExponent)) {
+    return 0;
   }
 
   if (existingServers.length < settings.maxPlayerServers) {
-      if (getCurrentMoney(ns)) >= maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation) {
-          var server = ns.purchasedServer("pServ-" + existingServers.length + "-" + maxRamCanBuy, maxRamCanBuy)
-          if (server) {
-            updateServerMap(ns, serverMap, server)
-            return 1
-          } else {
-            return 0
-          }
+    if (getCurrentMoney(ns) >= maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation) {
+      var server = ns.purchaseServer("pServ-" + existingServers.length + "-" + maxRamCanBuy, maxRamCanBuy)
+      if (server) {
+        updateServerMap(ns, serverMap, server)
+        return 1;
+      } else {
+        return 0;
       }
+    }
   } else {
     var worstServer = null
-    var worstRam = setttings.maxGbRam
-    
-    for(var i = 0; i < existingServers.length; i++) {
+    var worstRam = settings.maxGbRam
+
+    for (var i = 0; i < existingServers.length; i++) {
       var maxRam = ns.getServerMaxRam(existingServers[i])
       if (maxRam < worstRam) {
         worstServer = existingServers[i]
@@ -65,37 +66,36 @@ function buyBestServerPossible(ns) {
     }
 
     if (getCurrentMoney(ns) >= maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation) {
-           var server = ns.purchasedServer("pServ-" + existingServers.length + "-" + maxRamCanBuy, maxRamCanBuy)
-          if (server) {
-            updateServerMap(ns, serverMap, server)
-            return 1
-          } else {
-            return 0
-          }
-      }       
+      var server = ns.purchaseServer("pServ-" + existingServers.length + "-" + maxRamCanBuy, maxRamCanBuy)
+      if (server) {
+        updateServerMap(ns, serverMap, server)
+        return 1
+      } else {
+        return 0
+      }
     }
+
   }
 }
 
 function sellPurchasedServer(ns, serverName) {
-    ns.killall(serverName);
-    ns.deleteServer(serverName);
-    updateServerMap(ns, serverMap, server)
+  ns.killall(serverName);
+  ns.deleteServer(serverName);
 }
 
 function allServersMaxed(ns) {
-    var maxed = false;
-    var existingServers = ns.getPurchasedServers()
-    
-    if(existingServers.length == settings.maxPlayerServers) {
-        for(var i = 0; i < existingServers.length; i++) {
-            if(ns.getServerMaxRam(existingServers[i]) < settings.maxGbRam) {
-                return false;
-            }
-        }
-        maxed = true;
+  var maxed = false;
+  var existingServers = ns.getPurchasedServers()
+
+  if (existingServers.length == settings.maxPlayerServers) {
+    for (var i = 0; i < existingServers.length; i++) {
+      if (ns.getServerMaxRam(existingServers[i]) < settings.maxGbRam) {
+        return false;
+      }
     }
-    return maxed;
+    maxed = true;
+  }
+  return maxed;
 }
 
 function updateServerMap(ns, serverMap, host) {
