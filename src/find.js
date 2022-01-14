@@ -1,4 +1,4 @@
-import { localeHHMMSS } from 'helpers.ns'
+import { localeHHMMSS } from 'helpers.js'
 
 const settings = {
   keys: {
@@ -41,7 +41,7 @@ export function autocomplete(data, args){
 }
 
 export async function main(ns) {
-  ns.tprint(`[${localeHHMMSS()}] Starting find.ns`)
+  ns.tprint(`[${localeHHMMSS()}] Starting find.js`)
 
   const serverToFind = ns.args[0]
 

@@ -1,5 +1,5 @@
-import { getCurrentMoney, localeHHMMSS, createUUID } from 'helpers.ns'
-import { getItem, setItem } from 'common.ns'
+import { getCurrentMoney, localeHHMMSS, createUUID } from 'helpers.js'
+import { getItem, setItem } from 'common.js'
 
 const settings = {
   maxPlayerServers: 25,

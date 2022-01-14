@@ -1,7 +1,7 @@
-import { localeHHMMSS } from 'helpers.ns'
+import { localeHHMMSS } from 'helpers.js'
 
 export async function main(ns) {
-  ns.tprint(`[${localeHHMMSS()}] Starting karmaReducer.ns`)
+  ns.tprint(`[${localeHHMMSS()}] Starting karmaReducer.js`)
 
   let hostname = ns.getHostname()
 

@@ -1,18 +1,18 @@
 const baseUrl = 'https://raw.githubusercontent.com/fraktyl/bitburner-scripts/main/src/'
 const filesToDownload = [
-  'common.ns',
-  'contracter.ns',
-  'find.ns',
-  'grow.ns',
-  'hack.ns',
-  'helpers.ns',
-  'karmaReducer.ns',
-  'killAll.ns',  
-  'mainHack.ns',
-  'spider.ns',
-  'playerServers.ns',
-  'runHacking.ns',
-  'weaken.ns',
+  'common.js',
+  'contracter.js',
+  'find.js',
+  'grow.js',
+  'hack.js',
+  'helpers.js',
+  'karmaReducer.js',
+  'killAll.js',  
+  'mainHack.js',
+  'spider.js',
+  'playerServers.js',
+  'runHacking.js',
+  'weaken.js',
 ]
 const valuesToRemove = ['BB_SERVER_MAP']
 
@@ -25,7 +25,7 @@ function localeHHMMSS(ms = 0) {
 }
 
 export async function main(ns) {
-  ns.tprint(`[${localeHHMMSS()}] Starting initHacking.ns`)
+  ns.tprint(`[${localeHHMMSS()}] Starting initHacking.js`)
 
   let hostname = ns.getHostname()
 
@@ -45,6 +45,6 @@ export async function main(ns) {
 
   valuesToRemove.map((value) => localStorage.removeItem(value))
 
-  ns.tprint(`[${localeHHMMSS()}] Spawning killAll.ns`)
-  ns.spawn('killAll.ns', 1, 'runHacking.ns')
+  ns.tprint(`[${localeHHMMSS()}] Spawning killAll.js`)
+  ns.spawn('killAll.js', 1, 'runHacking.js')
 }
