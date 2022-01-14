@@ -1,4 +1,4 @@
-const baseUrl = 'https://raw.githubusercontent.com/fraktyl/bitburner-scripts/main/src/'
+const baseUrl = 'https://raw.githubusercontent.com/Fraktyl/bitburner-scripts/main/src/'
 const filesToDownload = [
   'common.js',
   'contracter.js',
