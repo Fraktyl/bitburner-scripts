@@ -25,7 +25,7 @@ export async function main(ns) {
   }
 
   await ns.wget(
-    `https://raw.githubusercontent.com/fraktyl/bitburner/main/src/initHacking.ns?ts=${new Date().getTime()}`,
+    `https://raw.githubusercontent.com/fraktyl/bitburner/main/src/initHacking.js?ts=${new Date().getTime()}`,
     "initHacking.js"
   );
   ns.spawn("initHacking.js", 1);
