@@ -28,7 +28,7 @@ export async function main(ns) {
 }
 
 function buyBestServerPossible(ns) {
-  const serverMap = getItem(settings.keys.serverMap)
+  const serverMap = getItem(keys.serverMap)
   var availableMoney = getCurrentMoney(ns) * settings.totalMoneyAllocation
   var currentRamExponent = 1
   var existingServers = ns.getPurchasedServers()
@@ -135,5 +135,5 @@ function updateServerMap(ns, serverMap, host) {
     }
   })
 
-  setItem(settings.keys.serverMap, serverMap)
+  setItem(keys.serverMap, serverMap)
 }
