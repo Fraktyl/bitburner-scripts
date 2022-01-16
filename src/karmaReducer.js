@@ -9,16 +9,16 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const crimeToCommit = 'homicide'
-  let numKills = 29
+  const crimeToCommit = 'homicide';
+  let numKills = 30;
 
-  while (numkills > 0) {
-    if ns.getCrimeChange(crimeToCommit) = 1 {
-      ns.commitCrime(crimeToCommit)
-      numkills--
+  while (numKills > 0) {
+    if (ns.getCrimeChance(crimeToCommit) == 1) {
+      ns.commitCrime(crimeToCommit);
+      numKills--;
       }
 
-    while (nsIsBusy()) {
+    while (ns.isBusy()) {
       await ns.sleep(100)
     }
   }
