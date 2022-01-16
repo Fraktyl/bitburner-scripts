@@ -1,16 +1,6 @@
-import { localeHHMMSS } from 'helpers.js'
+import { localeHHMMSS, getItem } from 'helpers.js'
+import { keys } from 'constants.js'
 
-const settings = {
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
 
 function printPathToServer(servers, serverToFind) {
   if (serverToFind === 'home') return 'home'
@@ -51,7 +41,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getItem(settings.keys.serverMap)
+  const serverMap = getItem(keys.serverMap)
 
   if (serverToFind) {
     if (Object.keys(serverMap.servers).includes(serverToFind)) {

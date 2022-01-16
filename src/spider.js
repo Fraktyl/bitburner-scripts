@@ -1,5 +1,5 @@
-import { settings, setItem } from 'common.js'
-import { localeHHMMSS } from 'helpers.js'
+import { keys } from 'constants.js'
+import { localeHHMMSS, setItem } from 'helpers.js'
 
 const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
 
@@ -132,7 +132,7 @@ export async function main(ns) {
     })
   }
 
-  setItem(settings().keys.serverMap, serverMap)
+  setItem(keys.serverMap, serverMap)
 
   if (!scriptToRunAfter) {
     ns.tprint(`[${localeHHMMSS()}] Spawning mainHack.js`)

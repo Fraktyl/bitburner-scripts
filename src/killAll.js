@@ -1,11 +1,6 @@
-import { localeHHMMSS } from 'helpers.js'
+import { localeHHMMSS, getItem } from 'helpers.js'
+import { keys } from 'constants.js'
 
-const settings = {
-  mapRefreshInterval: 24 * 60 * 60 * 1000,
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
-}
 const scriptsToKill = [
   'mainHack.js',
   'spider.js',
@@ -19,11 +14,7 @@ const scriptsToKill = [
   'find.js',
 ]
 
-function getItem(key) {
-  let item = localStorage.getItem(key)
 
-  return item ? JSON.parse(item) : undefined
-}
 export async function main(ns) {
   ns.tprint(`[${localeHHMMSS()}] Starting killAll.js`)
 
@@ -35,7 +26,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getItem(settings.keys.serverMap)
+  const serverMap = getItem(keys.serverMap)
 
   if (!serverMap || serverMap.lastUpdate < new Date().getTime() - settings.mapRefreshInterval) {
     ns.tprint(`[${localeHHMMSS()}] Spawning spider.js`)

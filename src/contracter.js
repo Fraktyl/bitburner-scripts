@@ -1,9 +1,6 @@
 // Based on https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts
-const settings = {
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
-}
+import {keys} from 'constants.js'
+
 
 function getItem(key) {
   let item = localStorage.getItem(key)
@@ -410,7 +407,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getItem(settings.keys.serverMap)
+  const serverMap = getItem(keys.serverMap)
   const contractsDb = []
 
   Object.keys(serverMap.servers).forEach((hostname) => {

@@ -1,34 +1,6 @@
-import { createUUID, localeHHMMSS } from 'helpers.js'
+import { createUUID, localeHHMMSS, getItem } from 'helpers.js'
+import { settings, keys, changes} from 'constants.js'
 
-const settings = {
-  homeRamReserved: 20,
-  homeRamReservedBase: 20,
-  homeRamExtraRamReserved: 64,
-  homeRamBigMode: 64,
-  minSecurityLevelOffset: 1,
-  maxMoneyMultiplayer: 0.9,
-  minSecurityWeight: 100,
-  mapRefreshInterval: 24 * 60 * 60 * 1000,
-  maxWeakenTime: 30 * 60 * 1000,
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
-  changes: {
-    hack: 0.002,
-    grow: 0.004,
-    weaken: 0.05,
-  },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
 
 const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
 const hackScripts = ['hack.js', 'grow.js', 'weaken.js']
@@ -65,11 +37,11 @@ function numberWithCommas(x) {
 }
 
 function weakenCyclesForGrow(growCycles) {
-  return Math.max(0, Math.ceil(growCycles * (settings.changes.grow / settings.changes.weaken)))
+  return Math.max(0, Math.ceil(growCycles * (changes.grow / changes.weaken)))
 }
 
 function weakenCyclesForHack(hackCycles) {
-  return Math.max(0, Math.ceil(hackCycles * (settings.changes.hack / settings.changes.weaken)))
+  return Math.max(0, Math.ceil(hackCycles * (changes.hack / changes.weaken)))
 }
 
 async function getHackableServers(ns, servers) {
@@ -143,7 +115,7 @@ export async function main(ns) {
 
   while (true) {
     const serverExtraData = {}
-    const serverMap = getItem(settings.keys.serverMap)
+    const serverMap = getItem(keys.serverMap)
     if (serverMap.servers.home.ram >= settings.homeRamBigMode) {
       settings.homeRamReserved = settings.homeRamReservedBase + settings.homeRamExtraRamReserved
     }
@@ -212,8 +184,8 @@ export async function main(ns) {
     ns.print(`[${localeHHMMSS()}] Delays: ${convertMSToHHMMSS(hackDelay)} for hacks, ${convertMSToHHMMSS(growDelay)} for grows`)
 
     if (action === 'weaken') {
-      if (settings.changes.weaken * weakenCycles > securityLevel - serverMap.servers[bestTarget].minSecurityLevel) {
-        weakenCycles = Math.ceil((securityLevel - serverMap.servers[bestTarget].minSecurityLevel) / settings.changes.weaken)
+      if (changes.weaken * weakenCycles > securityLevel - serverMap.servers[bestTarget].minSecurityLevel) {
+        weakenCycles = Math.ceil((securityLevel - serverMap.servers[bestTarget].minSecurityLevel) / changes.weaken)
         growCycles -= weakenCycles
         growCycles = Math.max(0, growCycles)
 
@@ -225,7 +197,7 @@ export async function main(ns) {
       }
 
       ns.print(
-        `[${localeHHMMSS()}] Cycles ratio: ${growCycles} grow cycles; ${weakenCycles} weaken cycles; expected security reduction: ${Math.floor(settings.changes.weaken * weakenCycles * 1000) / 1000
+        `[${localeHHMMSS()}] Cycles ratio: ${growCycles} grow cycles; ${weakenCycles} weaken cycles; expected security reduction: ${Math.floor(changes.weaken * weakenCycles * 1000) / 1000
         }`
       )
 
