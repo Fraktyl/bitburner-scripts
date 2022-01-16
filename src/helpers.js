@@ -20,3 +20,22 @@ export function localeHHMMSS(ms = 0) {
 export function getCurrentMoney(ns) {
     return ns.getServerMoneyAvailable("home");
 }
+
+export function getItem(key) {
+  let item = localStorage.getItem(key)
+
+  return item ? JSON.parse(item) : undefined
+}
+
+export function setItem(key, value) {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
+/**
+ * @param {NS} ns
+ * @param {array} list of loggable functions to disable
+ * @cost 0 GB
+ */
+ export function disableLogs(ns, listOfLogs) {
+  ['disableLog'].concat(...listOfLogs).forEach(log => ns.disableLog(log));
+}
