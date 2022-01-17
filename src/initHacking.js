@@ -10,7 +10,6 @@ const filesToDownload = [
   'killAll.js',  
   'mainHack.js',
   'spider.js',
-  'playerServers.js',
   'runHacking.js',
   'weaken.js',
   'listpServers.js',
