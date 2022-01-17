@@ -1,18 +1,10 @@
+import { getLSItem, setLSItem} from 'helper.js'
+
 const settings = {
   keys: {
     equipmentList: 'BB_EQUIPMENT_LIST',
     augumentationList: 'BB_AUGUMENTATION_LIST',
   },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
 }
 
 export async function main(ns) {
@@ -27,11 +19,11 @@ export async function main(ns) {
   })
   equpiments.sort((a, b) => a.cost - b.cost)
 
-  setItem(
+  setLSItem(
     settings.keys.equipmentList,
     equpiments.filter((eq) => eq.type !== 'Augmentation')
   )
-  setItem(
+  setLSItem(
     settings.keys.augumentationList,
     equpiments.filter((eq) => eq.type === 'Augmentation')
   )

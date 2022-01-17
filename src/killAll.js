@@ -1,4 +1,4 @@
-import { localeHHMMSS, getItem } from 'helpers.js'
+import { localeHHMMSS, getLSItem } from 'helpers.js'
 import { keys } from 'constants.js'
 
 const scriptsToKill = [
@@ -26,7 +26,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getItem(keys.serverMap)
+  const serverMap = getLSItem('serrverMap')
 
   if (!serverMap || serverMap.lastUpdate < new Date().getTime() - settings.mapRefreshInterval) {
     ns.tprint(`[${localeHHMMSS()}] Spawning spider.js`)

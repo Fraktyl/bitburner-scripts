@@ -1,19 +1,7 @@
+import { getLSItems, setLSItems} from 'helpers.js'
+
 const settings = {
-  keys: {
-    crimes: 'BB_CRIMES',
-    crimesStop: 'BB_CRIMES_STOP',
-  },
   intervalToRecheck: 10 * 60 * 1000,
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
 }
 
 function localeHHMMSS(ms = 0) {
@@ -63,7 +51,7 @@ export async function main(ns) {
   }
 
   let continueCommitingCrime = true
-  const crimes = getItem(settings.keys.crimes)
+  const crimes = getLSItem('crimes')
 
   if (!crimes) {
     getCrimesData(ns)
@@ -74,7 +62,7 @@ export async function main(ns) {
   const endTime = new Date().getTime() + settings.intervalToRecheck
 
   while (continueCommitingCrime) {
-    const crimesStop = getItem(settings.keys.crimesStop)
+    const crimesStop = getLSItem('crimesStop')
 
     if (crimesStop || new Date().getTime() > endTime) {
       continueCommitingCrime = false
@@ -89,10 +77,10 @@ export async function main(ns) {
     }
   }
 
-  const crimesStop = getItem(settings.keys.crimesStop)
+  const crimesStop = getLSItem('crimesStop')
   if (!crimesStop) {
     getCrimesData(ns)
   } else {
-    setItem(settings.keys.crimesStop, false)
+    setLSItem('crimesStop', false)
   }
 }

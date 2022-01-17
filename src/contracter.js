@@ -1,20 +1,6 @@
 // Based on https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts
-import {keys} from 'constants.js'
+import { getLSItem, setLSItems, localeHHMMSS } from 'helpers.js'
 
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
 
 function convert2DArrayToString(arr) {
   var components = []
@@ -407,7 +393,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getItem(keys.serverMap)
+  const serverMap = getLSItem('serverMap')
   const contractsDb = []
 
   Object.keys(serverMap.servers).forEach((hostname) => {

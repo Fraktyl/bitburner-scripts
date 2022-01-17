@@ -1,5 +1,5 @@
-import { localeHHMMSS, getItem } from 'helpers.js'
-import { keys } from 'constants.js'
+import { localeHHMMSS, getLSItem } from 'helpers.js'
+
 
 
 function printPathToServer(servers, serverToFind) {
@@ -41,7 +41,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getItem(keys.serverMap)
+  const serverMap = getLSItem('serverMap')
 
   if (serverToFind) {
     if (Object.keys(serverMap.servers).includes(serverToFind)) {

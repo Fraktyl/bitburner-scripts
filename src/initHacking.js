@@ -1,6 +1,6 @@
 const baseUrl = 'https://raw.githubusercontent.com/Fraktyl/bitburner-scripts/main/src/'
 const filesToDownload = [
-  'common.js',
+  'constants.js',
   'contracter.js',
   'find.js',
   'grow.js',
@@ -14,9 +14,14 @@ const filesToDownload = [
   'runHacking.js',
   'weaken.js',
   'listpServers.js',
-  '/Daemons/cron.js',
-  '/Daemons/stats.js'
+  'cron.js',
+  '/Daemons/buyPlayerServers.js',
+  '/Daemons/buyPrograms.js',
+  '/Daemons/buyTor.js',
+  '/Daemons/monitorPlayer.js',
+  '/Daemons/stats.js',
 ]
+
 const valuesToRemove = ['BB_SERVER_MAP']
 
 function localeHHMMSS(ms = 0) {

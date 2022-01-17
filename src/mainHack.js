@@ -1,5 +1,5 @@
-import { createUUID, localeHHMMSS, getItem } from 'helpers.js'
-import { settings, keys, changes} from 'constants.js'
+import { createUUID, localeHHMMSS, getLSItem } from 'helpers.js'
+import { settings, changes} from 'constants.js'
 
 
 const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
@@ -115,7 +115,7 @@ export async function main(ns) {
 
   while (true) {
     const serverExtraData = {}
-    const serverMap = getItem(keys.serverMap)
+    const serverMap = getLSItem('serverMap')
     if (serverMap.servers.home.ram >= settings.homeRamBigMode) {
       settings.homeRamReserved = settings.homeRamReservedBase + settings.homeRamExtraRamReserved
     }

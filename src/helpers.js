@@ -1,3 +1,5 @@
+import { hackPrograms, purchaseables, lskeys } from 'constants.js'
+
 /** @param {NS} ns **/
 export function createUUID() {
   var dt = new Date().getTime()
@@ -21,14 +23,18 @@ export function getCurrentMoney(ns) {
     return ns.getServerMoneyAvailable("home");
 }
 
-export function getItem(key) {
-  let item = localStorage.getItem(key)
+export function getLSItem(key) {
+  let item = localStorage.getItem(lskeys[key.toUpperCase()])
 
   return item ? JSON.parse(item) : undefined
 }
 
-export function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
+export function setLSItem(key, value) {
+  localStorage.setItem(lskeys[key.toUpperCase()], JSON.stringify(value))
+}
+
+export function clearLSItem(key) {
+  localStorage.removeItem(lskeys[key.toUpperCase()])
 }
 
 /**
@@ -39,3 +45,26 @@ export function setItem(key, value) {
  export function disableLogs(ns, listOfLogs) {
   ['disableLog'].concat(...listOfLogs).forEach(log => ns.disableLog(log));
 }
+
+/**
+ * @param {NS} ns
+ * @param {function} callback
+ * @cost 0 GB
+ */
+ export async function tryRun(callback) {
+  let pid = callback()
+  while (pid == 0) {
+    await mySleep(5)
+    pid = callback()
+  }
+  return pid
+}
+
+/**
+ * @return {object} The player data from localStorage
+ * @cost 0 GB
+ **/
+ export function fetchPlayer() {
+  return getLSItem('player')
+}
+

@@ -1,34 +1,41 @@
-import { getCurrentMoney, localeHHMMSS, createUUID } from 'helpers.js'
-import { getItem, setItem } from 'common.js'
+import { 
+  getCurrentMoney, 
+  localeHHMMSS, 
+  createUUID, 
+  getLSItem, 
+  setLSItem, 
+  disableLogs,
+} from 'helpers.js'
 
 const settings = {
   maxPlayerServers: 25,
   gbRamCost: 55000,
   maxGbRam: 1048576,
+
   maxExponent: 20,
   minPurchasedServerRam: 8,
   totalMoneyAllocation: 0.9,
   buyServers: true,
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
 }
 
 export async function main(ns) {
-  ns.disableLog('getServerMaxRam')
-  ns.disableLog('getServerMoneyAvailable')
-  
-  while (settings.buyServers) {
-    buyBestServerPossible(ns)
+  disableLogs(ns, ['getServerMaxRam', 'getServerMoneyAvailable'])
+
     if (allServersMaxed(ns)) {
-      settings.buyServers = false
-    }
-    await ns.sleep(30000)
+    return
   }
+  
+  const homePS = ns.ps('home')
+  if (homePS.some(proc => proc.filename === 'buyPrograms.js')) {
+    return
+  }
+
+  buyBestServerPossible(ns)
+  
 }
 
 function buyBestServerPossible(ns) {
-  const serverMap = getItem(keys.serverMap)
+  const serverMap = getLSItem('serverMap')
   var availableMoney = getCurrentMoney(ns) * settings.totalMoneyAllocation
   var currentRamExponent = 1
   var existingServers = ns.getPurchasedServers()
@@ -52,7 +59,7 @@ function buyBestServerPossible(ns) {
         ns.tprint(`[${localeHHMMSS()}] Buying: ${hostname}`)
       }
     } else {
-      ns.print(`[${localeHHMMSS()}] Cannot afford.  Need: ${maxRamCanBuy * setItem.gbRamCost * settings.totalMoneyAllocation} - Have: ${getCurrentMoney(ns)}`)
+      ns.print(`[${localeHHMMSS()}] Cannot afford.  Need: ${maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation} - Have: ${getCurrentMoney(ns)}`)
     }
   } else {
     var worstServer = findWorstServer(ns, existingServers)
@@ -74,7 +81,7 @@ function buyBestServerPossible(ns) {
         ns.tprint(`[${localeHHMMSS()}] Buying: ${hostname}`)
       }
     }  else {
-      ns.print(`[${localeHHMMSS()}] Cannot afford.  Need: ${maxRamCanBuy * setItem.gbRamCost * settings.totalMoneyAllocation} - Have: ${getCurrentMoney(ns)}`)
+      ns.print(`[${localeHHMMSS()}] Cannot afford.  Need: ${maxRamCanBuy * settings.gbRamCost * settings.totalMoneyAllocation} - Have: ${getCurrentMoney(ns)}`)
     }
   }
 }
@@ -135,5 +142,5 @@ function updateServerMap(ns, serverMap, host) {
     }
   })
 
-  setItem(keys.serverMap, serverMap)
+  setLSItem('servermap', serverMap)
 }
