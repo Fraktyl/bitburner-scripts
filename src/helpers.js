@@ -76,3 +76,13 @@ export function clearLSItem(key) {
   return getLSItem('player')
 }
 
+/**
+ * 
+ * @param {string} string 
+ * @param {integer} padLength 
+ * @param {character} fillString 
+ * @returns {string}
+ */
+export function padString(string, padLength, fillString) {
+  return (string.toString().padStart(padLength, fillString))
+}

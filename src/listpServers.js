@@ -1,3 +1,5 @@
+import { padString } from 'helpers.js'
+
 /** @param {NS} ns **/
 export async function main(ns) {
     var existingServers = ns.getPurchasedServers()
@@ -9,6 +11,8 @@ export async function main(ns) {
        })
     
     for (var i = 0; i < existingServers.length; i++) {
-       ns.tprint(`Server: ${i+1}: ${existingServers[i]}`)
+       ns.tprint(`Server: ${padString(i+1,2,'0')}: ${existingServers[i]}`)
     }
  }
+
+ 
