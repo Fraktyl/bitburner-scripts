@@ -7,10 +7,6 @@ import {
     disableLogs,
   } from 'helpers.js'
   
-  import {
-    keys
-  } from 'constants.js'
-  
   const settings = {
     maxPlayerServers: 25,
     gbRamCost: 55000,
@@ -39,7 +35,7 @@ import {
   }
   
   function buyBestServerPossible(ns) {
-    const serverMap = getLSItem(keys.serverMap)
+    const serverMap = getLSItem("serverMap")
     var availableMoney = getCurrentMoney(ns) * settings.totalMoneyAllocation
     var currentRamExponent = 1
     var existingServers = ns.getPurchasedServers()

@@ -4,7 +4,7 @@ const sec = 1000
 const min = 60 * sec
 
 const timers = [
-  { file: '/Damons/monitorPlayer.js',      freq: 20,       last: 0},
+  { file: '/Daemons/monitorPlayer.js',     freq: 20,       last: 0},
   { file: '/Daemons/stats.js',             freq: 1 * sec,  last: 0},
   { file: '/Daemons/buyPrograms.js',       freq: 5 * sec,  last: 0},
   { file: '/Daemons/buyPlayerServers.js',  freq: min,      last: 0},
