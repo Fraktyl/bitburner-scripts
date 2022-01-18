@@ -37,7 +37,7 @@ export const purchaseables = hackPrograms.concat([
   { name: "DeepscanV1.exe", cost: 500000, },
   { name: "DeepscanV2.exe", cost: 500000, },
   { name: "AutoLink.exe", cost: 500000, },
-  { name: "Forumulas.exe", cost: 500000, },
+  { name: "Formulas.exe", cost: 500000, },
 ])
 
 

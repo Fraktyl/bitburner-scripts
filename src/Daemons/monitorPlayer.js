@@ -13,11 +13,8 @@ export async function main(ns) {
       player.programs = []
       player.boughtAllPrograms = false
     } else {
-        /**
-      const home = await fetchServer(ns, 'home')
-      player.programs = home.files.filter(f => f.includes('.exe'))
+      player.programs = ns.ls('home', '.exe')
       player.boughtAllPrograms = didPlayerBuyAllPrograms(player)
-      **/
     }
   
     setLSItem('PLAYER', player)

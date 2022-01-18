@@ -20,7 +20,7 @@ export async function main(ns) {
   for ( const file of purchaseables ) {
     if ( !player.programs.includes(file.name) ) {
       if ( player.money > file.cost) {
-        ns.purchaseProgram(`${program.name}`)
+        ns.purchaseProgram(`${file.name}`)
         /*await tryRun(() => ns.run('/satellites/programBuyer.js', 1, file.name)) */
       }
       return

@@ -12,6 +12,7 @@ const scriptsToKill = [
   'initHacking.js',
   'start.js',
   'find.js',
+  'cron.js',
 ]
 
 
