@@ -25,7 +25,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const serverMap = getLSItem('serrverMap')
+  const serverMap = getLSItem('serverMap')
 
   if (!serverMap || serverMap.lastUpdate < new Date().getTime() - settings.mapRefreshInterval) {
     ns.tprint(`[${localeHHMMSS()}] Spawning spider.js`)
