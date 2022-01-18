@@ -46,6 +46,14 @@ export function clearLSItem(key) {
   ['disableLog'].concat(...listOfLogs).forEach(log => ns.disableLog(log));
 }
 
+
+/**
+ * @param {integer} milliseconds to sleep
+ * @cost 0 GB
+ */
+ export function mySleep(ms){
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
 /**
  * @param {NS} ns
  * @param {function} callback

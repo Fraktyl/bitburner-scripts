@@ -1,5 +1,4 @@
 import { localeHHMMSS, getLSItem } from 'helpers.js'
-import { keys } from 'constants.js'
 
 const scriptsToKill = [
   'mainHack.js',
