@@ -12,7 +12,7 @@ export async function main(ns) {
 
   if ( !player.tor ) {
     if ( player.money > 2e5 ) {
-      await tryRun(() => ns.run('/satellites/torBuyer.js'))
+      await tryRun(() => ns.run('/Daemons/buyTor.js'))
     }
     return
   }
